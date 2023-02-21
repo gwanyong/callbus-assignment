@@ -1,12 +1,10 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import styled from 'styled-components';
-import RegidencyForm from '../regidency-form/RegidencyForm';
-import RentalFee from './components/RentalFee';
+import RegidencyInfo from './component/RegidencyInfo';
 
-const RefundForm = () => {
+const RegidencyForm = () => {
   const methods = useForm({ mode: 'all' });
   const navigate = useNavigate();
   const params = useParams();
@@ -14,10 +12,8 @@ const RefundForm = () => {
   //각 스텝별 페이지
   const switchAuthPage = () => {
     switch (true) {
-      case params.step === '2':
-        return <RegidencyForm />;
       default:
-        return <RentalFee />;
+        return <RegidencyInfo />;
     }
   };
 
@@ -35,12 +31,11 @@ const RefundForm = () => {
   );
 };
 
-export default RefundForm;
+export default RegidencyForm;
 
 const __Container = styled.form`
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 360px;
+  width: 100%;
 `;

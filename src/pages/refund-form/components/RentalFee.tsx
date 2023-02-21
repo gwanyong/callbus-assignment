@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import themes from '../../../styles/themes';
 import JeonseForm from './JeonseForm';
@@ -10,6 +11,7 @@ const RentalFee = () => {
 
   const [category, setIsCategory] = useState('monthly');
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   // 월세 , 전세 버튼 클릭시 폼 노출
   const selectedCategory = () => {
@@ -95,7 +97,7 @@ const __Container = styled.div`
 `;
 
 const __Header = styled.header`
-  margin: 40px 0 50px;
+  padding: 32px 0;
 `;
 
 const __Info = styled.h1`
@@ -144,13 +146,12 @@ const __InfoWrapper = styled.div`
   font-weight: 500;
 
   img {
-    width: 14px;
+    width: 16px;
   }
 
   p {
-    margin-left: 5px;
+    margin-left: 4px;
     font-size: 12px;
-    font-weight: 500;
     color: #7a7a7a;
   }
 `;
