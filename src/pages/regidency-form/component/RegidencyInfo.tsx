@@ -1,10 +1,15 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import themes from '../../../styles/themes';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 const RegidencyInfo = () => {
-  const { register, setValue, unregister } = useFormContext();
+  const { register, setValue, watch, unregister } = useFormContext();
+  const [startDate, setStartDate] = useState(new Date());
+
   return (
     <__Container>
       <__Header>
@@ -24,7 +29,7 @@ const RegidencyInfo = () => {
         <__Catgetory>거주 건물</__Catgetory>
         <__AddressWrapper>
           <__AddressInput
-            {...register('monthly-cost')}
+            {...register('address')}
             required
             type="text"
             placeholder="살고 계신 건물주소 또는 건물명을 입력하세요."
@@ -43,29 +48,60 @@ const RegidencyInfo = () => {
           <__Catgetory>세입자(본인) 이름</__Catgetory>
           <__InputWrapper>
             <__Input
-              {...register('monthly-cost')}
+              {...register('room-number')}
               required
               placeholder="예) 101"
             />
             호
           </__InputWrapper>
           <__InputWrapper>
-            <__Input {...register('due-date')} required placeholder="예) 101" />
+            <__Input {...register('name')} required placeholder="예) 홍길동" />
           </__InputWrapper>
         </__GridWrapper>
         <__GridWrapper>
           <__Catgetory>계약시작일</__Catgetory>
           <__Catgetory>계약종료일</__Catgetory>
           <__InputWrapper>
-            <__Input
-              {...register('monthly-cost')}
-              required
-              placeholder="예) 101"
+            <Controller
+              name="birth"
+              render={({ field: { onChange, name } }) => (
+                <DatePicker
+                  placeholderText="선택해주세요"
+                  dateFormat="yyyy-MM-dd"
+                  selected={watch('started')}
+                  customInput={
+                    <__Input
+                      value={watch('started')}
+                      required
+                      placeholder="선택해주세요"
+                    />
+                  }
+                  onChange={(date) => setValue('started', date)}
+                  maxLength={6}
+                />
+              )}
             />
-            호
           </__InputWrapper>
           <__InputWrapper>
-            <__Input {...register('due-date')} required placeholder="예) 101" />
+            <Controller
+              name="birth"
+              render={({ field: { onChange, name } }) => (
+                <DatePicker
+                  placeholderText="선택해주세요"
+                  dateFormat="yyyy-MM-dd"
+                  selected={watch('ended')}
+                  customInput={
+                    <__Input
+                      {...register('ended')}
+                      required
+                      placeholder="선택해주세요"
+                    />
+                  }
+                  onChange={(date) => setValue('ended', date)}
+                  maxLength={6}
+                />
+              )}
+            />
           </__InputWrapper>
         </__GridWrapper>
         <__InfoWrapper>
@@ -75,7 +111,7 @@ const RegidencyInfo = () => {
         <__Catgetory>임대인 휴대폰 번호</__Catgetory>
         <__PhoneWrapper>
           <__AddressInput
-            {...register('monthly-cost')}
+            {...register('phone')}
             required
             type="text"
             placeholder="임대인(현재 집주인) 휴대폰 번호를 입력해주세요."
@@ -92,7 +128,7 @@ const RegidencyInfo = () => {
       <__SaftyDesc>
         세계 최고 AWS 보안으로 모든 정보는 안전하게 보호됩니다.
       </__SaftyDesc>
-      <__ConfirmBtn>완료</__ConfirmBtn>
+      <__ConfirmBtn type="submit">완료</__ConfirmBtn>
     </__Container>
   );
 };
@@ -193,6 +229,10 @@ const __GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 24px;
+
+  .datepicker {
+    display: none;
+  }
 `;
 
 const __InputWrapper = styled.div`

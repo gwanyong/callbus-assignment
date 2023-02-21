@@ -14,8 +14,8 @@ const RefundForm = () => {
   //각 스텝별 페이지
   const switchAuthPage = () => {
     switch (true) {
-      case params.step === '2':
-        return <RegidencyForm />;
+      // case params.step === '2':
+      //   return <RegidencyForm />;
       default:
         return <RentalFee />;
     }
@@ -23,7 +23,7 @@ const RefundForm = () => {
 
   //각각의 필드들 유효성 검사 후 페이지 동
   const onSubmit = () => {
-    navigate('/info/2');
+    navigate('/regidency-form');
   };
 
   return (
