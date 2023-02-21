@@ -8,9 +8,9 @@ const GlobalStyle = createGlobalStyle`
   }
   body{
     margin: 0 auto ;
-    background-color: #FFFFFF;
+    background-color: #F5F5F5;
     color: #222222;
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
 
    }
   a {
