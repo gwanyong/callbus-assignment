@@ -1,31 +1,70 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import themes from '../../../styles/themes';
 
-const MonthlyRentalForm = () => {
-  const { register, setFocus, getValues, watch } = useFormContext();
+interface Props {
+  isChecked: boolean;
+}
+
+const MonthlyRentalForm = (props: Props) => {
+  const { isChecked } = props;
+
+  const { register, setValue } = useFormContext();
+
+  useEffect(() => {
+    if (isChecked) {
+      setValue('monthly-cost', 0);
+    } else {
+      setValue('monthly-cost', '');
+    }
+  }, [isChecked]);
+
   return (
     <__InputContainer>
       <__InputWrapper>
         <p>보증금</p>
-        <__DepositInput {...register('phoneNumber')} autoFocus />
+        <__Input
+          {...register('deposit')}
+          autoFocus
+          required
+          type="text"
+          pattern="[0-9]+"
+        />
         만원
       </__InputWrapper>
 
       <__InputWrapper>
         <p>월 임대료</p>
-        <__DepositInput {...register('phoneNumber')} />
+        <__Input
+          {...register('rental-fee')}
+          required
+          type="text"
+          pattern="[0-9]+"
+        />
         만원
       </__InputWrapper>
-      <__InputWrapper>
+      <__InputWrapper isChecked={isChecked}>
         <p>월 관리비</p>
-        <__DepositInput {...register('phoneNumber')} />
+        <__Input
+          {...register('monthly-cost')}
+          required
+          type="text"
+          pattern="[0-9]+"
+        />
         만원
       </__InputWrapper>
       <__InputWrapper>
         <p>임대료 납부일</p>
-        <__DepositInput {...register('phoneNumber')} />일
+        <__Input
+          {...register('due-date')}
+          required
+          type="number"
+          pattern="[0-9]+"
+          min={1}
+          max={31}
+        />
+        일
       </__InputWrapper>
     </__InputContainer>
   );
@@ -40,15 +79,17 @@ const __InputContainer = styled.div`
   margin-top: 3px;
 `;
 
-const __InputWrapper = styled.div`
+const __InputWrapper = styled.div<{ isChecked?: boolean }>`
   display: flex;
   align-items: center;
   padding: 16px 8px 16px 12px;
-  background-color: ${themes.color.white};
+  background-color: ${(props) =>
+    props.isChecked ? '#F2F2F2' : themes.color.white};
   border: 1px solid #e8e8e8;
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
+  pointer-events: ${(props) => props.isChecked && 'none'};
 
   &:nth-child(1),
   :nth-child(3) {
@@ -67,8 +108,14 @@ const __InputWrapper = styled.div`
   }
 `;
 
-const __DepositInput = styled.input`
+const __Input = styled.input`
   width: 100%;
   padding-right: 3px;
   text-align: end;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;

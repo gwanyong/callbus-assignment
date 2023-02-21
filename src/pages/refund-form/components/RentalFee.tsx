@@ -6,23 +6,24 @@ import JeonseForm from './JeonseForm';
 import MonthlyRentalForm from './MonthlyRentalForm';
 
 const RentalFee = () => {
-  const { register, setFocus, getValues, watch, handleSubmit } =
-    useFormContext();
+  const { setValue } = useFormContext();
 
   const [category, setIsCategory] = useState('monthly');
+  const [isChecked, setIsChecked] = useState(false);
 
   // 월세 , 전세 버튼 클릭시 폼 노출
   const selectedCategory = () => {
     switch (true) {
       case category === 'jeonse':
-        return <JeonseForm />;
+        return <JeonseForm isChecked={isChecked} />;
       default:
-        return <MonthlyRentalForm />;
+        return <MonthlyRentalForm isChecked={isChecked} />;
     }
   };
 
-  const handleOnCheckBtn = () => {
-    console.log(123);
+  const handleOnCheckBtn = (e) => {
+    e.preventDefault();
+    setIsChecked(!isChecked);
   };
 
   return (
@@ -39,13 +40,19 @@ const RentalFee = () => {
           <__ButtonWrapper>
             <__RentalTypeBtn
               category={category === 'monthly'}
-              onClick={() => setIsCategory('monthly')}
+              onClick={(e) => {
+                setIsCategory('monthly');
+                e.preventDefault();
+              }}
             >
               월세
             </__RentalTypeBtn>
             <__RentalTypeBtn
               category={category === 'jeonse'}
-              onClick={() => setIsCategory('jeonse')}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsCategory('jeonse');
+              }}
             >
               전세
             </__RentalTypeBtn>
@@ -64,9 +71,11 @@ const RentalFee = () => {
           </__InfoWrapper>
           {selectedCategory()}
         </__CostBox>
-        <__CheckedBtnWrapper>
-          <__CheckBtn onClick={handleOnCheckBtn} />
-          <img src="/images/disabled.png" />
+        <__CheckedBtnWrapper isChecked={isChecked}>
+          <__CheckBtn onClick={(e) => handleOnCheckBtn(e)} />
+          <img
+            src={isChecked ? '/images/checked.png' : '/images/disabled.png'}
+          />
           <p>관리비는 관리실에 따로 납부하거나 없습니다.</p>
         </__CheckedBtnWrapper>
       </__Wrapper>
@@ -145,7 +154,7 @@ const __InfoWrapper = styled.div`
     color: #7a7a7a;
   }
 `;
-const __CheckedBtnWrapper = styled.div`
+const __CheckedBtnWrapper = styled.div<{ isChecked: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -157,6 +166,8 @@ const __CheckedBtnWrapper = styled.div`
 
   p {
     font-size: 14px;
+    font-weight: 700;
+    color: ${(props) => props.isChecked && themes.color.blue};
   }
 `;
 
