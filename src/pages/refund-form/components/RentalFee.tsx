@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import themes from '../../../styles/themes';
+import JeonseForm from './JeonseForm';
+import MonthlyRentalForm from './MonthlyRentalForm';
 
 const RentalFee = () => {
-  const { register, setFocus, getValues, watch } = useFormContext();
+  const { register, setFocus, getValues, watch, handleSubmit } =
+    useFormContext();
+
+  const [category, setIsCategory] = useState('monthly');
+
+  // 월세 , 전세 버튼 클릭시 폼 노출
+  const selectedCategory = () => {
+    switch (true) {
+      case category === 'jeonse':
+        return <JeonseForm />;
+      default:
+        return <MonthlyRentalForm />;
+    }
+  };
+
+  const handleOnCheckBtn = () => {
+    console.log(123);
+  };
+
   return (
     <__Container>
       <__Header>
@@ -17,8 +37,18 @@ const RentalFee = () => {
         <__CategoryBox>
           <__Catgetory>임대 유형</__Catgetory>
           <__ButtonWrapper>
-            <__RentalTypeBtn>월세</__RentalTypeBtn>
-            <__RentalTypeBtn>전세</__RentalTypeBtn>
+            <__RentalTypeBtn
+              category={category === 'monthly'}
+              onClick={() => setIsCategory('monthly')}
+            >
+              월세
+            </__RentalTypeBtn>
+            <__RentalTypeBtn
+              category={category === 'jeonse'}
+              onClick={() => setIsCategory('jeonse')}
+            >
+              전세
+            </__RentalTypeBtn>
           </__ButtonWrapper>
         </__CategoryBox>
 
@@ -32,31 +62,10 @@ const RentalFee = () => {
             <img alt="info-image" src="/images/info-icon.png" />
             <p>비용 입력시 고지서가 무료로 제공됩니다.</p>
           </__InfoWrapper>
-          <__InputContainer>
-            <__InputWrapper>
-              <p>보증금</p>
-              <__DepositInput {...register('phoneNumber')} autoFocus />
-              만원
-            </__InputWrapper>
-
-            <__InputWrapper>
-              <p>월 임대료</p>
-              <__DepositInput {...register('phoneNumber')} />
-              만원
-            </__InputWrapper>
-            <__InputWrapper>
-              <p>월 관리비</p>
-              <__DepositInput {...register('phoneNumber')} />
-              만원
-            </__InputWrapper>
-            <__InputWrapper>
-              <p>임대료 납부일</p>
-              <__DepositInput {...register('phoneNumber')} />일
-            </__InputWrapper>
-          </__InputContainer>
+          {selectedCategory()}
         </__CostBox>
         <__CheckedBtnWrapper>
-          <__CheckBtn onClick={() => console.log(123)} />
+          <__CheckBtn onClick={handleOnCheckBtn} />
           <img src="/images/disabled.png" />
           <p>관리비는 관리실에 따로 납부하거나 없습니다.</p>
         </__CheckedBtnWrapper>
@@ -100,11 +109,13 @@ const __ButtonWrapper = styled.div`
   display: flex;
 `;
 
-const __RentalTypeBtn = styled.button`
+const __RentalTypeBtn = styled.button<{ category: boolean }>`
   width: 100%;
   height: 44px;
-  color: ${themes.color.white};
-  background-color: ${themes.color.blue};
+  color: ${(props) =>
+    props.category ? themes.color.white : themes.color.black};
+  background-color: ${(props) =>
+    props.category ? themes.color.blue : themes.color.white};
   border-radius: 3px 0px 0px 3px;
 
   &:last-child {
@@ -116,12 +127,6 @@ const __CostBox = styled.div`
   margin-top: 48px;
 `;
 
-const __InputContainer = styled.div`
-  display: grid;
-  grid-row-gap: 8px;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 3px;
-`;
 const __InfoWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -140,39 +145,6 @@ const __InfoWrapper = styled.div`
     color: #7a7a7a;
   }
 `;
-const __InputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 16px 8px 16px 12px;
-  background-color: ${themes.color.white};
-  border: 1px solid #e8e8e8;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 500;
-
-  &:nth-child(1),
-  :nth-child(3) {
-    border-right: none;
-    border-radius: 3px 0 0 3px;
-  }
-  &:nth-child(2),
-  :nth-child(4) {
-    border-radius: 0 3px 3px 0;
-  }
-
-  p {
-    width: 56px;
-    font-size: 14px;
-    color: ${themes.color.grey};
-  }
-`;
-
-const __DepositInput = styled.input`
-  width: 100%;
-  padding-right: 3px;
-  text-align: end;
-`;
-
 const __CheckedBtnWrapper = styled.div`
   position: relative;
   display: flex;
