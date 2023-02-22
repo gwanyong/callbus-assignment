@@ -10,7 +10,7 @@ interface Props {
 const MonthlyRentalForm = (props: Props) => {
   const { isChecked } = props;
 
-  const { register, setValue, watch } = useFormContext();
+  const { register, setValue } = useFormContext();
 
   useEffect(() => {
     if (isChecked) {

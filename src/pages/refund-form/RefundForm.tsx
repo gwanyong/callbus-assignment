@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 import RegidencyForm from '../regidency-form/RegidencyForm';
+import ResultForm from '../result-form/ResultForm';
 import RentalFee from './components/RentalFee';
 
 const RefundForm = () => {
@@ -16,12 +17,12 @@ const RefundForm = () => {
     switch (true) {
       case params.step === '2':
         return <RegidencyForm />;
+      case params.step === '3':
+        return <ResultForm />;
       default:
         return <RentalFee />;
     }
   };
-
-  console.log(params);
 
   //각각의 필드들 유효성 검사 후 페이지 동
   const onSubmit = (data) => {

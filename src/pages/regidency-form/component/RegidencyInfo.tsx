@@ -10,9 +10,8 @@ import { useRecoilValue } from 'recoil';
 import { categoryState } from '../../../recoil/categoryState';
 
 const RegidencyInfo = () => {
-  const { register, setValue, watch, getValues } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
   const category = useRecoilValue(categoryState);
-  console.log(category);
 
   const navigate = useNavigate();
 
