@@ -17,28 +17,7 @@ const RegidencyForm = () => {
     }
   };
 
-  //각각의 필드들 유효성 검사 후 페이지 동
-  const onSubmit = (data) => {
-    alert('asdf');
-    console.log(data);
-  };
-
-  return (
-    <FormProvider {...methods}>
-      <__Container onSubmit={methods.handleSubmit(onSubmit)}>
-        {switchAuthPage()}
-      </__Container>
-    </FormProvider>
-  );
+  return <RegidencyInfo />;
 };
 
 export default RegidencyForm;
-
-const __Container = styled.form`
-  margin: 0 auto;
-  padding: 0 16px 109px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 360px;
-`;

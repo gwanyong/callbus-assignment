@@ -10,13 +10,11 @@ interface Props {
 const MonthlyRentalForm = (props: Props) => {
   const { isChecked } = props;
 
-  const { register, setValue } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
 
   useEffect(() => {
     if (isChecked) {
       setValue('monthly-cost', 0);
-    } else {
-      setValue('monthly-cost', '');
     }
   }, [isChecked]);
 
@@ -49,7 +47,7 @@ const MonthlyRentalForm = (props: Props) => {
         <__Input
           {...register('monthly-cost')}
           required
-          type="text"
+          type="number"
           pattern="[0-9]+"
         />
         만원

@@ -15,8 +15,6 @@ const JeonseForm = (props: Props) => {
     if (isChecked) {
       setValue('monthly-cost', 0);
       setValue('due-date', '');
-    } else {
-      setValue('monthly-cost', '');
     }
   }, [isChecked]);
 
@@ -35,7 +33,7 @@ const JeonseForm = (props: Props) => {
       </__InputWrapper>
       <__InputWrapper isChecked={isChecked}>
         <p>임대료 납부일</p>
-        <__Input {...register('due-date')} required />일
+        <__Input {...register('due-date')} />일
       </__InputWrapper>
     </__InputContainer>
   );

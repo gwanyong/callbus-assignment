@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { categoryState } from '../../../recoil/categoryState';
 import themes from '../../../styles/themes';
 import JeonseForm from './JeonseForm';
 import MonthlyRentalForm from './MonthlyRentalForm';
@@ -9,7 +11,8 @@ import MonthlyRentalForm from './MonthlyRentalForm';
 const RentalFee = () => {
   const { setValue } = useFormContext();
 
-  const [category, setIsCategory] = useState('monthly');
+  // const [category, setIsCategory] = useState('monthly');
+  const [category, setIsCategory] = useRecoilState(categoryState);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 

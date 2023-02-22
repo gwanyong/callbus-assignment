@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RefundForm />} />
-          <Route path="/regidency-form" element={<RegidencyForm />} />
+          <Route path="/info/:step" element={<RefundForm />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

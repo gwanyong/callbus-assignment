@@ -14,16 +14,26 @@ const RefundForm = () => {
   //각 스텝별 페이지
   const switchAuthPage = () => {
     switch (true) {
-      // case params.step === '2':
-      //   return <RegidencyForm />;
+      case params.step === '2':
+        return <RegidencyForm />;
       default:
         return <RentalFee />;
     }
   };
 
+  console.log(params);
+
   //각각의 필드들 유효성 검사 후 페이지 동
-  const onSubmit = () => {
-    navigate('/regidency-form');
+  const onSubmit = (data) => {
+    if (!params.step) {
+      navigate('/info/2');
+    }
+
+    if (params.step === '2') {
+      navigate('/info/3');
+    }
+
+    console.log(data);
   };
 
   return (
